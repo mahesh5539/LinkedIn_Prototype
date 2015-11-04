@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src='/javascripts/angular.min.js'></script>
+      <script src='/javascripts/angular-resource.min.js'></script>   
+<script src='/javascripts/angular-route.min.js'></script>
+ <link href ='/stylesheets/bootstrap.min.css' rel ='stylesheet'>
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/viewconnection.css">
+
+</head>
+<body data-ng-app="viewConnectionApp">
+
+<div class="container" data-ng-controller="ViewConnectController" data-ng-init="loadConnections()">
+
+	<h2 class="change_heading">Connections</h2>
+	<hr>
+<div class="viewRequest">
+<h3 class="change_heading">Pending Connections</h3>
+<input type="button" data-ng-click="loadPendingConnections()"  value="Pending Connections">
+
+<div data-ng-repeat="connection in connections">
+{{connection.first_name}} {{connection.last_name}}
+<button data-ng-click="acceptInvitation(data.email)">Accept</button>
+</div>
+
+</div>
+
+<hr>
+
+<div class="viewConnections">
+<h3 class="change_heading">Connections</h3>
+<div data-ng-repeat="data in display">
+{{data.first_name}} {{data.last_name}}
+
+</div>
+
+
+</div>
+
+</div>
+</div>
+
+<script>
+
+var viewConnectionApp = angular.module('viewConnectionApp', []);
+ viewConnectionApp.controller( 'ViewConnectController', function loadConnections($scope,$http){
+			$scope.loadConnections = function () {
+			$http({
+   				method: 'GET',
+	            url: '/connections/DisplayConnection'
+	             
+	           		}).success(function(response){
+	           		  $scope.display=response;      		
+	           		
+	           		
+	           		}).error(function(error){
+	        console.log("we are in error!!");
+	            alert("error");
+	        });        
+			};
+			
+			$scope.loadPendingConnections = function () {
+			$http({
+   				method: 'GET',
+	            url: '/connections/pendingConnection'
+	         }).success(function(response){
+	           		$scope.connections=response;
+	           		 
+	           		  }).error(function(error){
+	        console.log("we are in error!!");
+	            alert("error");
+	        });        
+			};
+			
+			
+			$scope.acceptInvitation= function (getEmailParam) {
+			$http({
+   				method: 'post',
+	            url: '/connections/acceptedInvitation',
+	            data:{email:getEmailParam}
+	         }).success(function(response){
+	         			if(response.affectedRows>0){
+	           		alert("Connected successfully!!!");
+	           		}
+	           		else{
+	           		alert("error!!");
+	           		}
+	           		  }).error(function(error){
+	        console.log("we are in error!!");
+	            alert("error");
+	        });        
+			};
+			
+		});
+
+</script>
+
+
+
+
+
+<script src="/javascripts/jquery.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+
+
+</body>
+</html>

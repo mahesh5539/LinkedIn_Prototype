@@ -1,0 +1,34 @@
+.searchClass{
+	position: relative;
+left: 100px;
+top: 100px;
+background-color: white;
+width: 800px;
+min-height: 281px;
+
+}
+
+.classForColor{
+	background-color:#e9e9e9; 
+}
+.resultTitle{
+	position: relative;
+top:10px;
+left: 20px;
+	font-size:15px;
+
+}
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+} 
+
+.repeatableData{
+	margin-left: 15px;
+}
+@font-face{font-family:"LinkedIn-Glyphs";src:url('https://www.linkedin.com/scds/common/u//fonts/LinkedInGlyphs/2.0.1/LinkedIn-Glyphs-16px.eot');src:url('https://www.linkedin.com/scds/common/u//fonts/LinkedInGlyphs/2.0.1/LinkedIn-Glyphs-16px.eot?#iefix') format('embedded-opentype'),url('https://www.linkedin.com/scds/common/u//fonts/LinkedInGlyphs/2.0.1/LinkedIn-Glyphs-16px.woff') format('woff'), url('https://www.linkedin.com/scds/common/u//fonts/LinkedInGlyphs/2.0.1/LinkedIn-Glyphs-16px.ttf') format('truetype');font-weight:normal;font-style:normal};

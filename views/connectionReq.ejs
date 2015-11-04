@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src='/javascripts/angular.min.js'></script>
+      <script src='/javascripts/angular-resource.min.js'></script>   
+<script src='/javascripts/angular-route.min.js'></script>
+ <link href ='/stylesheets/bootstrap.min.css' rel ='stylesheet'>
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/linkedinnew.css">
+
+</head>
+
+
+<body data-ng-app="AppConnect">
+<div  data-ng-controller="connectionController" data-ng-init="loadProfile()">
+
+
+<div class="addheadingbelow">
+
+<div class="profileheading">
+
+<div class= "imagearea">
+<img src="/images/profile.jpeg" style="width:200px; height:200px; float:left;">
+</div>
+
+<div class="profileinfo">
+	<ul style="list-style-type:none">
+
+
+	<li><h3>{{FirstName}} {{LastName}}</h3></li>
+
+<li><p class="professionalHeading"style="font-size:16px">{{heading}} </p></li>
+<li class="distance" style="color: #999;">{{city}} {{state}}</li>
+<li class="distance" style="color: #999; font-size: 11px;">Education</li><p class="adjustUniversity">{{school}} </p>
+
+<button class="btn btn-primary" onClick="this.disabled=true; this.value='Request Sent';"name="submit" type="submit" data-ng-click="underConnect()"  >Connect</button>
+</ul> 
+</div>
+
+
+</div >
+
+
+</div>
+
+
+
+<div class="section1">
+
+
+<div class="summaryblock1">
+	<h3 class="smallH3">Summary</h3>
+	<p>{{summary}}</p>
+	</div>
+</div>
+
+
+
+
+
+
+<div class="section2">
+	
+	<div  class="header">
+	<h3 class="smallH3">Education</h3>
+	<h4>School</h4> <p>{{school}}</p>
+	<h4>Date Attended</h4> <p>{{school_s_date}} - {{school_e_date}}</p>
+	<h4>Degree</h4> <p>{{degree}}</p>
+	<h4>Field of Study</h4> <p>{{study_field}}</p>
+	<h4>Grades</h4> <p>{{grades}}</p>
+	<h4>Activities and Socities</h4> <p>{{activity}}</p>
+	<h4>Description</h4> <p>{{edudesc}}</p>
+</div >
+</div>
+
+
+
+
+<div class="section3">
+	<div class="header">
+	<h3 class="smallH3">Experience</h3>
+	<h4>Company Name</h4> <p>{{company_name}}</p>
+	<h4>Title</h4> <p>{{title}}</p>
+	<h4>Location</h4> <p>{{location}}</p>
+	<h4>Time Period</h4> <p>{{start_month}} {{start_year}} - {{end_month}} {{end_year}}</p>
+	<h4>Description</h4> <p>{{exp_desc}}</p>
+	
+</div>
+</div>
+
+
+<div class="section4">
+	<div class="header">
+	<h3 class="smallH3">Skills and Endorsements</h3><br>
+</div>
+</div>
+
+
+</div>
+
+
+
+<script>
+var emailid="<%=emailId%>";
+console.log(emailid);
+
+var AppConnect = angular.module('AppConnect', []);
+ AppConnect.controller( 'connectionController', function loadProfile($scope,$http){
+			$scope.loadProfile = function () {
+			$http({
+   				method: 'POST',
+	            url: '/connections/getProfile',
+	             data:{"emailid":emailid }
+	           		}).success(function(response){
+	           		console.log("We are in init");
+					$scope.FirstName=response[0].first_name;
+	           		 $scope.LastName=response[0].last_name;
+	           		 $scope.title=response[0].title;
+	           		 $scope.company_name=response[0].company_name;
+	           		 $scope.city=response[0].city;
+	           		 $scope.state=response[0].state;
+	    			 $scope.summary=response[0].summary;
+	    			 $scope.location=response[0].location;
+	    			 $scope.start_month=response[0].start_month;
+	    			 $scope.end_month=response[0].end_month;
+	    			 $scope.start_year=response[0].start_year;
+	    			 $scope.end_year=response[0].end_year;
+	    			 $scope.exp_desc=response[0].experience_description;
+	    			 $scope.heading=response[0].p_heading;
+	    			 $scope.school=response[0].school_name;
+	    			 $scope.school_s_date=response[0].s_date_start;
+	    			 $scope.school_e_date=response[0].s_date_end;
+	    			 $scope.degree=response[0].degree;
+	    			 $scope.study_field=response[0].study_field;
+	    			 $scope.grades=response[0].grades;
+	    			 $scope.activity=response[0].activities;
+	    			 $scope.edudesc=response[0].education_experience;
+	    			 	
+	   	    }).error(function(error){
+	        console.log("we are in error!!");
+	            alert("error");
+	        });        
+			};
+			
+			$scope.underConnect = function(){ 
+   				$http({
+   					method: 'POST',
+	            	url: '/connections/sendRequest',
+	            	data: {"emailid": emailid}
+	           	}).success(function(response){
+	           		if(response.affectedRows>0){
+	           		alert("Request Sent!!!");
+	           		}
+	           		else{
+	           		alert("Request not sent. Please send again!!!");
+	           		}
+	           		  
+	        	}).error(function(error){
+	        	console.log("we are in error!!");
+	            alert("error");
+	        });   		
+ 			};
+ 	
+			
+			});
+	
+
+
+
+
+</script>
+
+
+
+
+<script src="/javascripts/jquery.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+</body>
+</html>

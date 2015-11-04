@@ -1,0 +1,16 @@
+body{
+background-color: #e9e9e9;
+
+}
+
+.container{
+	background-color: white;
+	position: relative;
+	top: 25px;
+	min-height: 450px;
+
+}
+.change_heading{
+
+margin-left: 15px;
+}

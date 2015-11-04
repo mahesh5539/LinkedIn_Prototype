@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <script src='/javascripts/angular.min.js'></script>
+      <script src='/javascripts/angular-resource.min.js'></script>   
+<script src='/javascripts/angular-route.min.js'></script>
+ <link href ='/stylesheets/bootstrap.min.css' rel ='stylesheet'>
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/search.css">
+
+
+
+
+</head>
+<body class="classForColor" data-ng-app="searchMemberApp">
+
+
+
+
+<div data-ng-controller="searchMemberController">
+
+<div class="container">
+
+<div class="searchClass">
+
+<input type="text" style="width:650px;" data-ng-model="member">
+<button name="search" value="Search" class="search-button" type="submit" data-ng-click="searchM()">
+<span>Search</span>
+</button><br>
+<a class="resultTitle" href="#">Show all results</a>
+
+<br>
+<br><br>
+
+<div class="repeatableData">
+ <hr/>
+<img src="/images/profile.jpeg" style="width:70px; height:70px; float:left;">
+
+<a href="" data-ng-click="getProfileConnect()"><h2 style="font-size:19px;"><b>{{FirstName}}</b> {{LastName}}</h2><br></a>
+<p> {{title}} at {{company_name}}</p>
+<p>{{city}} {{state}}</p>
+<br>
+</div>
+<hr>
+</div>
+</div>
+</div>
+
+<script>
+ var searchMemberApp = angular.module('searchMemberApp', []);
+ searchMemberApp.controller( 'searchMemberController', function searchM($scope,$http){
+ $scope.searchM = function () {$http({
+   				method: 'POST',
+	            url: '/searchMembers/display',
+	            data:{"emailid": $scope.member}
+	           		}).success(function(response){
+	           		 $scope.FirstName=response[0].first_name;
+	           		 $scope.LastName=response[0].last_name;
+	           		 $scope.title=response[0].title;
+	           		 $scope.company_name=response[0].company_name;
+	           		 $scope.city=response[0].city;
+	           		 $scope.state=response[0].state;
+	           		alert(response[0].first_name);
+         	   	    }).error(function(error){
+	        	console.log("we are in error!!");
+	            alert("error");
+	        });   		        
+			};
+			
+   				$scope.getProfileConnect = function(){ 
+   				$http({
+   					method: 'POST',
+	            	url: '/connections/getConnectProfile',
+	            	data: {"emailid": $scope.member}
+	           	}).success(function(response){
+	           		console.log("$scope.member- ",$scope.member);
+	           		if(response.status=="no") {
+	                 	window.location = '/notConnected?emailId='+$scope.member;
+	                } else {
+	            		window.location = '/connected?emailId='+$scope.membe;
+	            	}
+	        	}).error(function(error){
+	        	console.log("we are in error!!");
+	            alert("error");
+	        });   		
+ 			};
+ 			
+ 	
+ 			
+			
+			}); 
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/javascripts/jquery.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+
+
+
+
+
+</body>
+</html>
